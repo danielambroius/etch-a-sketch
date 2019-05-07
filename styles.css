@@ -1,9 +1,13 @@
 .sketch-container {
     display: grid;
-    margin: 130px auto;
+    margin: 0 auto;
+}
+
+body {
+    margin: 0 0;
 }
 
 .item {
-    justify-self: stretch;
+    transition-duration: 200ms;
 }
 
