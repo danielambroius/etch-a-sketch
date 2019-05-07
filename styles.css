@@ -1,0 +1,9 @@
+.sketch-container {
+    display: grid;
+    margin: 130px auto;
+}
+
+.item {
+    justify-self: stretch;
+}
+
