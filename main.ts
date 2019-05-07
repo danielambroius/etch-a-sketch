@@ -22,7 +22,7 @@ for (let i = 0; i < gridSize; i++) {
         let gridSquare:HTMLElement = document.createElement('div')
         gridSquare.setAttribute("class", "item")
         gridSquare.addEventListener("mouseover", (e) => {
-            changeColorOfElement(e.target);
+            changeColorOfElement(<HTMLElement>e.target);
         })
         let c1 = i / gridSize * 255;
         let c2 = j / gridSize * 255;
