@@ -1,3 +1,7 @@
+:root {
+    background-color: "#e4cece";
+}
+
 .canvas-container {
     display: grid;
     margin: 0 auto;
@@ -25,5 +29,7 @@ body {
 
 .item {
     transition-duration: 20ms;
+    margin: 1px;
 }
+
 
