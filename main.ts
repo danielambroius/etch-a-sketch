@@ -14,6 +14,10 @@ var colorPickerConstructed:boolean = false;
 // between keypress and keydown.
 var keyIsDown:boolean = false;
 
+// Used for setting cursor color
+let style = document.createElement('style');
+document.getElementsByTagName('head')[0].appendChild(style);
+
 
 function styleCanvas() {
     // Calculates wiewport dimentions
@@ -66,7 +70,7 @@ function launchColorpicker() {
                 let brightness =  30 + (j / gridSize * 60) + "%";
                 colorSquare.style.backgroundColor = `hsl(${hue}, ${saturation}, ${brightness})`;
                 colorSquare.addEventListener('mouseover', (e) => {
-                    pencilColor = getElementColor(<HTMLElement>e.target);
+                    setPencilColor(getElementColor(<HTMLElement>e.target));
                     })
                 colorPickerContainer.appendChild(colorSquare);
             }
@@ -97,6 +101,14 @@ function turnDrawingOff() {
 function launchHelpText() {
     helptext.style.display = "inherit";
 }
+
+function setPencilColor (color:string) {
+    // https://stackoverflow.com/a/11371599/11227739
+    pencilColor = color;
+    let css = `.item:hover {border: 3px dashed ${color};}`;
+    style.innerHTML = '';
+    style.appendChild(document.createTextNode(css));
+} 
 
 // EVENTLISTENERS:
 window.addEventListener('keydown', (e) => {
