@@ -3,15 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <title>My awesome etch-a-sketch</title>
+        <link rel="stylesheet" href="normal.css">
         <link rel="stylesheet" href="styles.css">    
     </head>
     <body>
         <div class="canvas-container"></div>
         <div class="CP-Container"></div>
         <div class="help-text">
-            <p>Welcome to my fabulous etch-a-sketch webapp. Drawing works by holding down <kbd>x</kbd>. If you wish to select a different color, you can press and hold <kbd>c</kbd> to launch the colorpicker, hover over the color of your choise and release <kbd>c</kbd>. If you wish to see this windown again, press <kbd>h</kbd>. If you wish to change the resolution of the canvas, enter a number beteen 2 and 100 in the field below and click <kbd>reset</kbd>.</p>
-            <input class="grid-size-field" type="text" name="grid-size" value="25">
-            <button class="reset-button" type="submit">reset</button>
+            <p>Welcome to my fabulous etch-a-sketch webapp.</p>
+            
+            <p>Draw by holding down <kbd>x</kbd>.</p> 
+
+            <p>Select a different color by holding down <kbd>c</kbd>, hover over the color of your choice and release <kbd>c</kbd>. </p>
+                
+            <p>If you wish to see this window again, press <kbd>h</kbd>.</p>
+            <p> If you wish to change the resolution of the canvas, enter a number beteen 2 and 100 in the field below and click <kbd>reset</kbd>.</p>
+            <div class="input">
+                <input class="grid-size-field" type="text" name="grid-size" value="25">
+                <div>
+                    <button class="go-button">GO!</button>
+                    <button class="reset-button" type="submit">reset</button>
+                </div>
+            </div>
         </div>
         <script src="main.js"></script>
     </body>

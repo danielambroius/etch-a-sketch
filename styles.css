@@ -15,11 +15,39 @@
 .help-text {
     display: inherit;
     position: absolute;
-    top: 123px;
-    margin: 30% 20%;
+    top: 10%;
+    margin: auto 20%;
     padding: 15px;
     background-color: rgb(127, 255, 212);
     color: rgb(48, 107, 88);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 14pt;
+    border: 10px solid rgb(255, 208, 0);
+}
+.help-text p {
+    margin: 14px 0;
+}
+
+kbd, button, input {
+    border: 2px solid rgb(48, 107, 88);
+    border-radius: 5px;
+    color: rgb(212, 174, 1);
+    font-size: 14pt;
+    padding: 0 4px;
+    font-weight: bold;
+}
+.input {
+    text-align: center;
+}
+
+button:hover{
+    background-color: aquamarine
+}
+
+button, input {
+    margin: 10px 10px;
+    text-align: center;
 }
 
 body {

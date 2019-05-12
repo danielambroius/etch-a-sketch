@@ -13,6 +13,9 @@ buttom somewhere or a key that resets the grid with variable cellsize
 ### ~~NicerColorpicker~~
 Implement a colorpicker that captures the whole hue as well as saturation
 
+### ~~NicerHelpMenu~~
+The helpmenu should look nice
+
 ### transparency
 On each mouseover it should get darker (erhaps through some nice sorted pallete based on selected color)
 
