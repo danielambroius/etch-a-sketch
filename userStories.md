@@ -7,7 +7,7 @@ Hold button and click a color, pencil will then assume that color.
 ### ~~PenOnOff~~
 Pen activation/deactivation should map to holding down some button.
 
-### ResetGrid
+### ~~ResetGrid~~
 buttom somewhere or a key that resets the grid with variable cellsize
 
 ### transparency

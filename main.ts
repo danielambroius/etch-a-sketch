@@ -1,6 +1,7 @@
-let canvasContainer:HTMLElement = document.querySelector(".canvas-container");
-let colorPickerContainer:HTMLElement = document.querySelector(".CP-Container");
-let helptext:HTMLElement = document.querySelector(".help-text");
+const canvasContainer:HTMLElement = document.querySelector(".canvas-container");
+const colorPickerContainer:HTMLElement = document.querySelector(".CP-Container");
+const helptext:HTMLElement = document.querySelector(".help-text");
+const resetButton:HTMLElement = document.querySelector(".reset-button");
 
 // Variables.
 var gridSize:number = 25;
@@ -35,6 +36,7 @@ function styleCanvas() {
 }
 
 function redrawGrid() {
+    canvasContainer.innerHTML = '';
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
             let gridSquare:HTMLElement = document.createElement('div')
@@ -53,6 +55,7 @@ function launchColorpicker() {
     canvasContainer.style.display = "none";
     colorPickerContainer.style.display = "grid";
     if (!colorPickerConstructed) { // i.e. if allready created, just display it.
+        colorPickerContainer.innerHTML = '';
         for (let i = 0; i < gridSize; i++) {
             for (let j = 0; j < gridSize; j++) {
                 const colorSquare:HTMLElement = document.createElement('div');
@@ -90,6 +93,12 @@ function turnDrawingOff() {
     isDrawing = false;
 }
 
+function launchHelpText() {
+    helptext.style.display = "inherit";
+    console.log("HIII");
+}
+
+// EVENTLISTENERS:
 window.addEventListener('keydown', (e) => {
     if (!keyIsDown) {
         const key = e.key.toUpperCase();
@@ -99,6 +108,9 @@ window.addEventListener('keydown', (e) => {
                 break;
             case "C":
                 launchColorpicker();
+                break;
+            case "H":
+                launchHelpText();
                 break;
             default:
                 break;
@@ -119,7 +131,20 @@ window.addEventListener('keyup', (e) => {
 })
 window.onresize = styleCanvas;
 
+resetButton.addEventListener('click', (e) => {
+    var field = <HTMLFormElement>document.querySelector(".grid-size-field");
+    var input = parseInt(field.value);
+    if (input != NaN && input <= 100 && input >= 2) {
+        gridSize = input;
+        helptext.style.display = "none"
+        main(); //resets the application
+    }
+})
+
+
+// main:
 function main() {
+    colorPickerConstructed = false;
     styleCanvas();
     redrawGrid();
 }

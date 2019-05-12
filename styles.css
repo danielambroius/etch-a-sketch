@@ -8,8 +8,19 @@
     margin: 0 auto;
 }
 
+.help-text {
+    display: inherit;
+    position: absolute;
+    top: 123px;
+    margin: 30% 20%;
+    padding: 15px;
+    background-color: rgb(127, 255, 212);
+    color: rgb(48, 107, 88);
+}
+
 body {
     margin: 0 0;
+    position: relative;
 }
 
 .item {
