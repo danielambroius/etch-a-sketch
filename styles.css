@@ -56,7 +56,7 @@ body {
 }
 
 .item {
-    transition-duration: 20ms;
+    transition-duration: 0ms;
     border: 1px solid white;
     cursor: none;
 }

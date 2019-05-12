@@ -5,7 +5,7 @@ const resetButton = document.querySelector(".reset-button");
 const goButton = document.querySelector(".go-button");
 const inputField = document.querySelector(".grid-size-field");
 // Variables.
-var gridSize = 25;
+var gridSize = 50;
 var pencilColor = "aquamarine";
 var isDrawing = false;
 var colorPickerConstructed = false;

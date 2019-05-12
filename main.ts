@@ -6,7 +6,7 @@ const goButton:HTMLButtonElement = document.querySelector(".go-button")
 const inputField = <HTMLFormElement>document.querySelector(".grid-size-field");
 
 // Variables.
-var gridSize:number = 25;
+var gridSize:number = 50;
 var pencilColor:string = "aquamarine";
 var isDrawing:boolean = false;
 var colorPickerConstructed:boolean = false;
