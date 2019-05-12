@@ -57,7 +57,15 @@ body {
 
 .item {
     transition-duration: 20ms;
-    margin: 1px;
+    border: 1px solid transparent;
+    cursor: none;
+}
+.color-item {
+    cursor: none;
+}
+
+.item:hover {
+    border: 2px dashed aquamarine;
 }
 
 .color-item:hover {

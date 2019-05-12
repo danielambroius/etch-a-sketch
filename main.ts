@@ -51,6 +51,7 @@ function redrawGrid() {
     }
 }
 
+
 function launchColorpicker() {
     canvasContainer.style.display = "none";
     colorPickerContainer.style.display = "grid";
@@ -70,7 +71,8 @@ function launchColorpicker() {
                 colorPickerContainer.appendChild(colorSquare);
             }
         }
-    colorPickerConstructed = true;}
+    colorPickerConstructed = true;
+}
 }
 function closeColorPicker() {
     colorPickerContainer.style.display = "none";
