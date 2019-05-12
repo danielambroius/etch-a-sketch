@@ -6,7 +6,6 @@ const resetButton:HTMLElement = document.querySelector(".reset-button");
 // Variables.
 var gridSize:number = 25;
 var pencilColor:string = "magenta";
-var backgroundColor:string = "#e4cece"
 var isDrawing:boolean = false;
 var colorPickerConstructed:boolean = false;
 // To check if any key is currently pressed to make keyevents trigger only once
@@ -45,7 +44,6 @@ function redrawGrid() {
                 changeElementColor
             (<HTMLElement>e.target);
             })
-            gridSquare.style.backgroundColor = backgroundColor; 
             canvasContainer.appendChild(gridSquare);
         }
     }
@@ -59,14 +57,12 @@ function launchColorpicker() {
         for (let i = 0; i < gridSize; i++) {
             for (let j = 0; j < gridSize; j++) {
                 const colorSquare:HTMLElement = document.createElement('div');
-                colorSquare.setAttribute('class', 'item');
                 let hue = i / gridSize * 360;
                 let saturation = "100%"
                 let brightness =  30 + (j / gridSize * 60) + "%";
                 colorSquare.style.backgroundColor = `hsl(${hue}, ${saturation}, ${brightness})`;
-                colorSquare.addEventListener('click', (e) => {
+                colorSquare.addEventListener('mouseover', (e) => {
                     pencilColor = getElementColor(<HTMLElement>e.target);
-                    closeColorPicker();
                     })
                 colorPickerContainer.appendChild(colorSquare);
             }
@@ -95,7 +91,6 @@ function turnDrawingOff() {
 
 function launchHelpText() {
     helptext.style.display = "inherit";
-    console.log("HIII");
 }
 
 // EVENTLISTENERS:
@@ -125,6 +120,9 @@ window.addEventListener('keyup', (e) => {
         case "X":
             turnDrawingOff();
             break;
+        case "C":
+            closeColorPicker();
+            break;
         default:
             break;
     }
@@ -135,9 +133,11 @@ resetButton.addEventListener('click', (e) => {
     var field = <HTMLFormElement>document.querySelector(".grid-size-field");
     var input = parseInt(field.value);
     if (input != NaN && input <= 100 && input >= 2) {
-        gridSize = input;
         helptext.style.display = "none"
-        main(); //resets the application
+        if (!(input == gridSize)) {
+            gridSize = input;
+            main(); //resets the application
+        }
     }
 })
 
