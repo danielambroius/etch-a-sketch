@@ -1,7 +1,9 @@
 const canvasContainer:HTMLElement = document.querySelector(".canvas-container");
 const colorPickerContainer:HTMLElement = document.querySelector(".CP-Container");
 const helptext:HTMLElement = document.querySelector(".help-text");
-const resetButton:HTMLElement = document.querySelector(".reset-button");
+const resetButton:HTMLButtonElement = document.querySelector(".reset-button");
+const goButton:HTMLButtonElement = document.querySelector(".go-button")
+const inputField = <HTMLFormElement>document.querySelector(".grid-size-field");
 
 // Variables.
 var gridSize:number = 25;
@@ -128,16 +130,14 @@ window.addEventListener('keyup', (e) => {
     }
 })
 window.onresize = styleCanvas;
+goButton.onclick = () => {helptext.style.display = "none";}
 
 resetButton.addEventListener('click', (e) => {
-    var field = <HTMLFormElement>document.querySelector(".grid-size-field");
-    var input = parseInt(field.value);
+    var input = parseInt(inputField.value);
     if (input != NaN && input <= 100 && input >= 2) {
-        helptext.style.display = "none"
-        if (!(input == gridSize)) {
-            gridSize = input;
-            main(); //resets the application
-        }
+        helptext.style.display = "none";
+        gridSize = input;
+        main(); //resets the application
     }
 })
 
@@ -147,6 +147,7 @@ function main() {
     colorPickerConstructed = false;
     styleCanvas();
     redrawGrid();
+    inputField.value = gridSize;
 }
 
 main();
