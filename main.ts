@@ -1,8 +1,9 @@
 let canvasContainer:HTMLElement = document.querySelector(".canvas-container");
 let colorPickerContainer:HTMLElement = document.querySelector(".CP-Container");
+let helptext:HTMLElement = document.querySelector(".help-text");
 
 // Variables.
-var gridSize:number = 16;
+var gridSize:number = 25;
 var pencilColor:string = "magenta";
 var backgroundColor:string = "#e4cece"
 var isDrawing:boolean = false;
@@ -49,7 +50,6 @@ function redrawGrid() {
 }
 
 function launchColorpicker() {
-    console.log("colorpicker lauched dummy?")
     canvasContainer.style.display = "none";
     colorPickerContainer.style.display = "grid";
     if (!colorPickerConstructed) { // i.e. if allready created, just display it.
@@ -63,15 +63,14 @@ function launchColorpicker() {
                 colorSquare.style.backgroundColor = `rgb(${c1}, ${c2}, ${c3})`;
                 colorSquare.addEventListener('click', (e) => {
                     pencilColor = getElementColor(<HTMLElement>e.target);
-                    console.log(pencilColor);
-                })
+                    closeColorPicker();
+                    })
                 colorPickerContainer.appendChild(colorSquare);
             }
         }
     colorPickerConstructed = true;}
 }
 function closeColorPicker() {
-    console.log("colorpicker closed dummy?")
     colorPickerContainer.style.display = "none";
     canvasContainer.style.display = "grid";
 }
@@ -114,16 +113,15 @@ window.addEventListener('keyup', (e) => {
         case "X":
             turnDrawingOff();
             break;
-        case "C":
-            closeColorPicker();
-            break;
         default:
             break;
     }
 })
 window.onresize = styleCanvas;
 
+function main() {
+    styleCanvas();
+    redrawGrid();
+}
 
-// Main:
-styleCanvas();
-redrawGrid();
+main();
