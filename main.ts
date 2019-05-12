@@ -7,7 +7,7 @@ const inputField = <HTMLFormElement>document.querySelector(".grid-size-field");
 
 // Variables.
 var gridSize:number = 25;
-var pencilColor:string = "magenta";
+var pencilColor:string = "aquamarine";
 var isDrawing:boolean = false;
 var colorPickerConstructed:boolean = false;
 // To check if any key is currently pressed to make keyevents trigger only once
@@ -59,6 +59,7 @@ function launchColorpicker() {
         for (let i = 0; i < gridSize; i++) {
             for (let j = 0; j < gridSize; j++) {
                 const colorSquare:HTMLElement = document.createElement('div');
+                colorSquare.setAttribute("class", "color-item")
                 let hue = i / gridSize * 360;
                 let saturation = "100%"
                 let brightness =  30 + (j / gridSize * 60) + "%";
