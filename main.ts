@@ -60,10 +60,10 @@ function launchColorpicker() {
             for (let j = 0; j < gridSize; j++) {
                 const colorSquare:HTMLElement = document.createElement('div');
                 colorSquare.setAttribute('class', 'item');
-                let c1 = i / gridSize * 255;
-                let c2 = j / gridSize * 255;
-                let c3 = 255 - c1;
-                colorSquare.style.backgroundColor = `rgb(${c1}, ${c2}, ${c3})`;
+                let hue = i / gridSize * 360;
+                let saturation = "100%"
+                let brightness =  30 + (j / gridSize * 60) + "%";
+                colorSquare.style.backgroundColor = `hsl(${hue}, ${saturation}, ${brightness})`;
                 colorSquare.addEventListener('click', (e) => {
                     pencilColor = getElementColor(<HTMLElement>e.target);
                     closeColorPicker();

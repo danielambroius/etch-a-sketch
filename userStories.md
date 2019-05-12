@@ -10,7 +10,7 @@ Pen activation/deactivation should map to holding down some button.
 ### ~~ResetGrid~~
 buttom somewhere or a key that resets the grid with variable cellsize
 
-### NicerColorpicker
+### ~~NicerColorpicker~~
 Implement a colorpicker that captures the whole hue as well as saturation
 
 ### transparency
