@@ -2,7 +2,7 @@ let canvasContainer:HTMLElement = document.querySelector(".canvas-container");
 let colorPickerContainer:HTMLElement = document.querySelector(".CP-Container");
 
 // Variables.
-var gridSize:number = 50;
+var gridSize:number = 16;
 var pencilColor:string = "magenta";
 var backgroundColor:string = "#e4cece"
 var isDrawing:boolean = false;
@@ -12,26 +12,26 @@ var colorPickerConstructed:boolean = false;
 var keyIsDown:boolean = false;
 
 
-// Calculates wiewport dimentions
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
-// Calculates the size of each cell.
-let cellWidth = windowWidth / gridSize;
-let cellHeight = windowHeight / gridSize;
-console.log(cellHeight);
+function styleCanvas() {
+    // Calculates wiewport dimentions
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    // Calculates the size of each cell.
+    let cellWidth = windowWidth / gridSize;
+    let cellHeight = windowHeight / gridSize;
 
+    // set for canvas
+    canvasContainer.style.width = windowWidth + "px";;
+    canvasContainer.style.height = windowHeight + "px";;
+    canvasContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
+    canvasContainer.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
 
-// set for canvas
-canvasContainer.style.width = windowWidth + "px";;
-canvasContainer.style.height = windowHeight + "px";;
-canvasContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
-canvasContainer.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
-
-// set for colorpicker
-colorPickerContainer.style.width = windowWidth + "px";;
-colorPickerContainer.style.height = windowHeight + "px";;
-colorPickerContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
-colorPickerContainer.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
+    // set for colorpicker
+    colorPickerContainer.style.width = windowWidth + "px";;
+    colorPickerContainer.style.height = windowHeight + "px";;
+    colorPickerContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
+    colorPickerContainer.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
+}
 
 function redrawGrid() {
     for (let i = 0; i < gridSize; i++) {
@@ -68,14 +68,12 @@ function launchColorpicker() {
                 colorPickerContainer.appendChild(colorSquare);
             }
         }
-
-    }
+    colorPickerConstructed = true;}
 }
 function closeColorPicker() {
     console.log("colorpicker closed dummy?")
     colorPickerContainer.style.display = "none";
     canvasContainer.style.display = "grid";
-    // TODO: should probably relaunch the main app
 }
 
 
@@ -97,10 +95,10 @@ window.addEventListener('keydown', (e) => {
     if (!keyIsDown) {
         const key = e.key.toUpperCase();
         switch (key) {
-            case "C":
+            case "X":
                 turnDrawingOn();
                 break;
-            case "P":
+            case "C":
                 launchColorpicker();
                 break;
             default:
@@ -113,17 +111,19 @@ window.addEventListener('keyup', (e) => {
     keyIsDown = false;
     const key = e.key.toUpperCase();
     switch (key) {
-        case "C":
+        case "X":
             turnDrawingOff();
             break;
-        case "P":
+        case "C":
             closeColorPicker();
             break;
         default:
             break;
     }
 })
+window.onresize = styleCanvas;
 
 
 // Main:
+styleCanvas();
 redrawGrid();
