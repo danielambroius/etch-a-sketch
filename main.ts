@@ -9,6 +9,7 @@ container.style.height = windowHeight + "px";
 // Dummy values for now.
 const gridSize = 50;
 const pencilColor = "magenta";
+var isDrawing = false;
 
 // Calculates the size of each cell and creates css grid using repeat()
 let cellWidth = container.clientWidth / gridSize;
@@ -35,6 +36,22 @@ for (let i = 0; i < gridSize; i++) {
 
 
 function changeColorOfElement(div:HTMLElement) {
-    div.style.backgroundColor = pencilColor;
+    if (isDrawing) {div.style.backgroundColor = pencilColor;}
 }
 
+function turnDrawingOn() {
+    isDrawing = true;
+}
+function turnDrawingOff() {
+    isDrawing = false;
+}
+
+window.addEventListener('keydown', (e) => {
+    const key = e.key.toUpperCase();
+    if (key == "C") {turnDrawingOn()}
+})
+
+window.addEventListener('keyup', (e) => {
+    const key = e.key.toUpperCase();
+    if (key == "C") {turnDrawingOff()}
+})
