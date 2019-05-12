@@ -1,5 +1,10 @@
-.sketch-container {
+.canvas-container {
     display: grid;
+    margin: 0 auto;
+}
+
+.CP-Container {
+    display: none;
     margin: 0 auto;
 }
 
@@ -8,6 +13,6 @@ body {
 }
 
 .item {
-    transition-duration: 200ms;
+    transition-duration: 20ms;
 }
 

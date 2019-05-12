@@ -1,42 +1,89 @@
-let container:HTMLElement = document.querySelector(".sketch-container");
+let canvasContainer:HTMLElement = document.querySelector(".canvas-container");
+let colorPickerContainer:HTMLElement = document.querySelector(".CP-Container");
 
-// Basically fullscreens the container div
-let windowWidth = window.innerWidth;
-let windowHeight = window.innerHeight;
-container.style.width = windowWidth + "px";
-container.style.height = windowHeight + "px";
-
-// Dummy values for now.
-const gridSize = 50;
-const pencilColor = "magenta";
-var isDrawing = false;
-
-// Calculates the size of each cell and creates css grid using repeat()
-let cellWidth = container.clientWidth / gridSize;
-let cellHeight = container.clientHeight / gridSize;
-container.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
-container.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
+// Variables.
+var gridSize:number = 50;
+var pencilColor:string = "magenta";
+var backgroundColor:string = "#e4cece"
+var isDrawing:boolean = false;
+var colorPickerConstructed:boolean = false;
+// To check if any key is currently pressed to make keyevents trigger only once
+// between keypress and keydown.
+var keyIsDown:boolean = false;
 
 
-for (let i = 0; i < gridSize; i++) {
-    for (let j = 0; j < gridSize; j++) {
-        let gridSquare:HTMLElement = document.createElement('div')
-        gridSquare.setAttribute("class", "item")
-        gridSquare.addEventListener("mouseover", (e) => {
-            changeColorOfElement(<HTMLElement>e.target);
-        })
-        let c1 = i / gridSize * 255;
-        let c2 = j / gridSize * 255;
-        let c3 = 255 - c1
-        gridSquare.style.backgroundColor = `rgb(${c1}, ${c2}, ${c3})`
-        container.appendChild(gridSquare);
+// Calculates wiewport dimentions
+const windowWidth = window.innerWidth;
+const windowHeight = window.innerHeight;
+// Calculates the size of each cell.
+let cellWidth = windowWidth / gridSize;
+let cellHeight = windowHeight / gridSize;
+console.log(cellHeight);
+
+
+// set for canvas
+canvasContainer.style.width = windowWidth + "px";;
+canvasContainer.style.height = windowHeight + "px";;
+canvasContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
+canvasContainer.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
+
+// set for colorpicker
+colorPickerContainer.style.width = windowWidth + "px";;
+colorPickerContainer.style.height = windowHeight + "px";;
+colorPickerContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${cellWidth}px)`
+colorPickerContainer.style.gridTemplateRows = `repeat(${gridSize}, ${cellHeight}px)`
+
+function redrawGrid() {
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+            let gridSquare:HTMLElement = document.createElement('div')
+            gridSquare.setAttribute("class", "item")
+            gridSquare.addEventListener("mouseover", (e) => {
+                changeElementColor
+            (<HTMLElement>e.target);
+            })
+            gridSquare.style.backgroundColor = backgroundColor; 
+            canvasContainer.appendChild(gridSquare);
+        }
     }
 }
 
+function launchColorpicker() {
+    console.log("colorpicker lauched dummy?")
+    canvasContainer.style.display = "none";
+    colorPickerContainer.style.display = "grid";
+    if (!colorPickerConstructed) { // i.e. if allready created, just display it.
+        for (let i = 0; i < gridSize; i++) {
+            for (let j = 0; j < gridSize; j++) {
+                const colorSquare:HTMLElement = document.createElement('div');
+                colorSquare.setAttribute('class', 'item');
+                let c1 = i / gridSize * 255;
+                let c2 = j / gridSize * 255;
+                let c3 = 255 - c1;
+                colorSquare.style.backgroundColor = `rgb(${c1}, ${c2}, ${c3})`;
+                colorSquare.addEventListener('click', (e) => {
+                    pencilColor = getElementColor(<HTMLElement>e.target);
+                    console.log(pencilColor);
+                })
+                colorPickerContainer.appendChild(colorSquare);
+            }
+        }
+
+    }
+}
+function closeColorPicker() {
+    console.log("colorpicker closed dummy?")
+    colorPickerContainer.style.display = "none";
+    canvasContainer.style.display = "grid";
+    // TODO: should probably relaunch the main app
+}
 
 
-function changeColorOfElement(div:HTMLElement) {
-    if (isDrawing) {div.style.backgroundColor = pencilColor;}
+function changeElementColor(e:HTMLElement) {
+    if (isDrawing) {e.style.backgroundColor = pencilColor;}
+}
+function getElementColor(e:HTMLElement): string {
+    return e.style.backgroundColor;
 }
 
 function turnDrawingOn() {
@@ -47,11 +94,36 @@ function turnDrawingOff() {
 }
 
 window.addEventListener('keydown', (e) => {
-    const key = e.key.toUpperCase();
-    if (key == "C") {turnDrawingOn()}
+    if (!keyIsDown) {
+        const key = e.key.toUpperCase();
+        switch (key) {
+            case "C":
+                turnDrawingOn();
+                break;
+            case "P":
+                launchColorpicker();
+                break;
+            default:
+                break;
+        }
+    } keyIsDown = true;
 })
 
 window.addEventListener('keyup', (e) => {
+    keyIsDown = false;
     const key = e.key.toUpperCase();
-    if (key == "C") {turnDrawingOff()}
+    switch (key) {
+        case "C":
+            turnDrawingOff();
+            break;
+        case "P":
+            closeColorPicker();
+            break;
+        default:
+            break;
+    }
 })
+
+
+// Main:
+redrawGrid();
