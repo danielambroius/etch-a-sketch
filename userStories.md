@@ -18,7 +18,7 @@ The helpmenu should look nice
 
 ### ~~Cursor should have the selected pencilcolor.~~
 
-### transparency
+### ~~transparency~~
 On each mouseover it should get darker (erhaps through some nice sorted pallete based on selected color). In this case the colorselection should be hue and saturation and the pencil should decrease the brighness valueeach time.
 
 ### SquarePixels

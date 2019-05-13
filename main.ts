@@ -7,7 +7,7 @@ const inputField = <HTMLFormElement>document.querySelector(".grid-size-field");
 
 // Variables.
 var gridSize:number = 50;
-var pencilColor:string = "aquamarine";
+var pencilColor:string = "hsl(120, 50%, 50%)";
 var isDrawing:boolean = false;
 var colorPickerConstructed:boolean = false;
 // To check if any key is currently pressed to make keyevents trigger only once
@@ -47,9 +47,9 @@ function redrawGrid() {
         for (let j = 0; j < gridSize; j++) {
             let gridSquare:HTMLElement = document.createElement('div')
             gridSquare.setAttribute("class", "item")
+            gridSquare.style.backgroundColor = 'hsl(120, 100%, 100%)'
             gridSquare.addEventListener("mouseover", (e) => {
-                changeElementColor
-            (<HTMLElement>e.target);
+                changeElementColor(<HTMLElement>e.target);
             })
             canvasContainer.appendChild(gridSquare);
         }
@@ -94,9 +94,53 @@ function closeColorPicker() {
     canvasContainer.style.display = "grid";
 }
 
+function rgbToHsl(r:number, g:number, b:number):number[] {
+    // adapted from: https://gist.github.com/mjackson/5311256
+    r /= 255, g /= 255, b /= 255;
+  
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h:number, s:number, l:number = (max + min) / 2;
+  
+    if (max == min) {
+      h = s = 0; // achromatic
+    } else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+  
+      h /= 6;
+    }
+  
+    return [ h*360, s*100, l*100 ];
+  }
+  
+
+function handleTransparency(pencilColor:string, cellColor:string):string {
+    let pattern = /[^\d,]/g;
+    let f = (i) => {return parseInt(i)};
+    let p:number[] = pencilColor.replace(pattern, '').split(',').map(f);
+    let c:number[] = cellColor.replace(pattern, '').split(',').map(f);
+    console.log("pen cell found: " + pencilColor + cellColor);
+    console.log(p, c);
+    let hue = rgbToHsl(p[0], p[1], p[2])[0];
+    let brightness = rgbToHsl(c[0], c[1], c[2])[2] - 5;
+    return `hsl(${hue}, ${100}%, ${brightness}%)`;
+}
 
 function changeElementColor(e:HTMLElement) {
-    if (isDrawing) {e.style.backgroundColor = pencilColor;}
+    if (isDrawing) {
+        let color = pencilColor;
+        if (transparency) {
+            color = handleTransparency(pencilColor, e.style.backgroundColor);
+            console.log("assigned: " + color);
+        }
+        e.style.backgroundColor = color;
+    }
 }
 function getElementColor(e:HTMLElement): string {
     return e.style.backgroundColor;
@@ -120,7 +164,6 @@ function toggeleTransparency() {
     else {transparency = true};
     colorPickerConstructed = false; // To be able to construct different CP
     setPencilColor(pencilColor); // so that the cursor changes
-    console.log(pencilColor);
 
 }
 
@@ -146,7 +189,7 @@ window.addEventListener('keydown', (e) => {
             case "H":
                 togglehHelpText();
                 break;
-            case "T":
+            case "Z":
                 toggeleTransparency();
             default:
                 break;
