@@ -12,6 +12,7 @@ var colorPickerConstructed = false;
 // To check if any key is currently pressed to make keyevents trigger only once
 // between keypress and keydown.
 var keyIsDown = false;
+var transparency = false;
 // Used for setting cursor color
 let style = document.createElement('style');
 document.getElementsByTagName('head')[0].appendChild(style);
@@ -50,6 +51,20 @@ function redrawGrid() {
         }
     }
 }
+function hsl(i, j, gridSize) {
+    let hue = i / gridSize * 360;
+    let saturation = '';
+    let brightness = '';
+    if (!transparency) {
+        saturation = "100%";
+        brightness = 30 + (j / gridSize * 60) + "%";
+    }
+    else {
+        saturation = '100%';
+        brightness = '50%';
+    }
+    return `hsl(${hue}, ${saturation}, ${brightness})`;
+}
 function launchColorpicker() {
     canvasContainer.style.display = "none";
     colorPickerContainer.style.display = "grid";
@@ -59,10 +74,7 @@ function launchColorpicker() {
             for (let j = 0; j < gridSize; j++) {
                 const colorSquare = document.createElement('div');
                 colorSquare.setAttribute("class", "color-item");
-                let hue = i / gridSize * 360;
-                let saturation = "100%";
-                let brightness = 30 + (j / gridSize * 60) + "%";
-                colorSquare.style.backgroundColor = `hsl(${hue}, ${saturation}, ${brightness})`;
+                colorSquare.style.backgroundColor = hsl(i, j, gridSize);
                 colorSquare.addEventListener('mouseover', (e) => {
                     setPencilColor(getElementColor(e.target));
                 });
@@ -93,10 +105,22 @@ function turnDrawingOff() {
 function launchHelpText() {
     helptext.style.display = "inherit";
 }
+function toggeleTransparency() {
+    if (transparency) {
+        transparency = false;
+    }
+    else {
+        transparency = true;
+    }
+    ;
+    colorPickerConstructed = false; // To be able to construct different CP
+    setPencilColor(pencilColor); // so that the cursor changes
+    console.log(pencilColor);
+}
 function setPencilColor(color) {
     // https://stackoverflow.com/a/11371599/11227739
     pencilColor = color;
-    let css = `.item:hover {border: 3px dashed ${color};}`;
+    let css = `.item:hover {border: 3px ${(transparency) ? 'dotted' : 'dashed'} ${color};}`;
     style.innerHTML = '';
     style.appendChild(document.createTextNode(css));
 }
@@ -114,6 +138,8 @@ window.addEventListener('keydown', (e) => {
             case "H":
                 launchHelpText();
                 break;
+            case "T":
+                toggeleTransparency();
             default:
                 break;
         }

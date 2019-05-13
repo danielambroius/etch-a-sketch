@@ -13,6 +13,7 @@ var colorPickerConstructed:boolean = false;
 // To check if any key is currently pressed to make keyevents trigger only once
 // between keypress and keydown.
 var keyIsDown:boolean = false;
+var transparency:boolean = false;
 
 // Used for setting cursor color
 let style = document.createElement('style');
@@ -55,6 +56,19 @@ function redrawGrid() {
     }
 }
 
+function hsl(i:number , j:number, gridSize:number):string {
+    let hue = i / gridSize * 360;
+    let saturation = '';
+    let brightness = '';
+    if (!transparency) {
+        saturation = "100%"
+        brightness =  30 + (j / gridSize * 60) + "%";
+    } else {
+        saturation = '100%';
+        brightness = '50%';
+    }
+    return `hsl(${hue}, ${saturation}, ${brightness})`;
+}
 
 function launchColorpicker() {
     canvasContainer.style.display = "none";
@@ -65,10 +79,7 @@ function launchColorpicker() {
             for (let j = 0; j < gridSize; j++) {
                 const colorSquare:HTMLElement = document.createElement('div');
                 colorSquare.setAttribute("class", "color-item")
-                let hue = i / gridSize * 360;
-                let saturation = "100%"
-                let brightness =  30 + (j / gridSize * 60) + "%";
-                colorSquare.style.backgroundColor = `hsl(${hue}, ${saturation}, ${brightness})`;
+                colorSquare.style.backgroundColor = hsl(i, j, gridSize);
                 colorSquare.addEventListener('mouseover', (e) => {
                     setPencilColor(getElementColor(<HTMLElement>e.target));
                     })
@@ -102,10 +113,19 @@ function launchHelpText() {
     helptext.style.display = "inherit";
 }
 
+function toggeleTransparency() {
+    if (transparency) {transparency = false}
+    else {transparency = true};
+    colorPickerConstructed = false; // To be able to construct different CP
+    setPencilColor(pencilColor); // so that the cursor changes
+    console.log(pencilColor);
+
+}
+
 function setPencilColor (color:string) {
     // https://stackoverflow.com/a/11371599/11227739
     pencilColor = color;
-    let css = `.item:hover {border: 3px dashed ${color};}`;
+    let css = `.item:hover {border: 3px ${(transparency)? 'dotted' : 'dashed'} ${color};}`;
     style.innerHTML = '';
     style.appendChild(document.createTextNode(css));
 } 
@@ -124,6 +144,8 @@ window.addEventListener('keydown', (e) => {
             case "H":
                 launchHelpText();
                 break;
+            case "T":
+                toggeleTransparency();
             default:
                 break;
         }
