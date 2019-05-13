@@ -21,5 +21,8 @@ The helpmenu should look nice
 ### ~~transparency~~
 On each mouseover it should get darker (erhaps through some nice sorted pallete based on selected color). In this case the colorselection should be hue and saturation and the pencil should decrease the brighness valueeach time.
 
+### Better blending
+Improve the blending between canvas and pen color.
+
 ### SquarePixels
 Make the pixels (more) square insdead of the same shape as the window.
