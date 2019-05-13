@@ -102,8 +102,13 @@ function turnDrawingOn() {
 function turnDrawingOff() {
     isDrawing = false;
 }
-function launchHelpText() {
-    helptext.style.display = "inherit";
+function togglehHelpText() {
+    if (helptext.style.display == 'none') {
+        helptext.style.display = "inherit";
+    }
+    else {
+        helptext.style.display = 'none';
+    }
 }
 function toggeleTransparency() {
     if (transparency) {
@@ -136,7 +141,7 @@ window.addEventListener('keydown', (e) => {
                 launchColorpicker();
                 break;
             case "H":
-                launchHelpText();
+                togglehHelpText();
                 break;
             case "T":
                 toggeleTransparency();
