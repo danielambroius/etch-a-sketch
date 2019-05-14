@@ -13,6 +13,7 @@ var colorPickerConstructed = false;
 // between keypress and keydown.
 var keyIsDown = false;
 var transparency = false;
+var randomness = false;
 // Used for setting cursor color
 let style = document.createElement('style');
 document.getElementsByTagName('head')[0].appendChild(style);
@@ -120,18 +121,16 @@ function handleTransparency(pencilColor, cellColor) {
     let f = (i) => { return parseInt(i); };
     let p = pencilColor.replace(pattern, '').split(',').map(f);
     let c = cellColor.replace(pattern, '').split(',').map(f);
-    console.log("pen cell found: " + pencilColor + cellColor);
-    console.log(p, c);
     let hue = rgbToHsl(p[0], p[1], p[2])[0];
     let brightness = rgbToHsl(c[0], c[1], c[2])[2] - 5;
-    return `hsl(${hue}, ${100}%, ${brightness}%)`;
+    let r = (randomness) ? (40 * Math.random()) - 10 : 0.; // TODO: change implementation so that this can be done with solid color as well
+    return `hsl(${hue + r}, ${100}%, ${brightness}%)`;
 }
 function changeElementColor(e) {
     if (isDrawing) {
         let color = pencilColor;
         if (transparency) {
             color = handleTransparency(pencilColor, e.style.backgroundColor);
-            console.log("assigned: " + color);
         }
         e.style.backgroundColor = color;
     }
@@ -164,6 +163,9 @@ function toggeleTransparency() {
     colorPickerConstructed = false; // To be able to construct different CP
     setPencilColor(pencilColor); // so that the cursor changes
 }
+function toggleRandomness() {
+    randomness = (randomness) ? false : true;
+}
 function setPencilColor(color) {
     // https://stackoverflow.com/a/11371599/11227739
     pencilColor = color;
@@ -187,6 +189,10 @@ window.addEventListener('keydown', (e) => {
                 break;
             case "Z":
                 toggeleTransparency();
+                break;
+            case "V":
+                toggleRandomness();
+                break;
             default:
                 break;
         }
